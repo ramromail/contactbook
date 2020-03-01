@@ -1,5 +1,7 @@
 import React from "react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 function ListItems(props) {
   const items = props.items;
   const listItems = items.map(item => {
@@ -37,13 +39,28 @@ function ListItems(props) {
           />
         </td>
         <td>
-          <button
+          {/* <button
             onClick={() => {
               props.deleteItem(item.id);
             }}
           >
             Del
-          </button>
+          </button> */}
+          <FontAwesomeIcon
+            className="faicons"
+            onClick={() => {
+              props.deleteItem(item.id);
+            }}
+            icon="pencil-alt"
+          />
+
+          <FontAwesomeIcon
+            className="faicons"
+            onClick={() => {
+              props.deleteItem(item.id);
+            }}
+            icon="trash"
+          />
         </td>
       </tr>
     );

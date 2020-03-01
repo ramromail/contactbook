@@ -27,6 +27,13 @@ body {
   background-color: #f1f1f1;
 }
 
+.App {
+  width: 100%;
+  max-width: 942px;
+  margin: 0 auto;
+  clear: both;
+}
+
 
 table {
   border-collapse: collapse;
@@ -36,8 +43,6 @@ table {
 
 table td {
   border-bottom: 1px solid #eee;
-  /* width: 30%; */
-  padding: 16px 0 16px 16px;
 }
 
 td input {
@@ -49,11 +54,11 @@ table td:nth-child(1) {
 }
 
 table td:nth-child(2) {
-  width: 40%;
+  width: 30%;
 }
 
 table td:nth-child(3) {
-  width: 20;
+  width: 30;
 }
 
 table td:nth-child(4) {
@@ -63,13 +68,19 @@ table td:nth-child(4) {
 table.addcontacts thead tr td,
 table.contactsList thead tr td 
 {
-  padding: 16px 0 16px 24px;
+  padding: 16px 16px 16px 24px;
   height: 48px;
 }
 
 table.contactsList tbody tr td {
-  padding: 24px 0 24px 24px;
+  /* padding: 24px 0 24px 24px; */
+  padding: 24px;
   height: 72px;
+}
+
+.contactsList td:nth-child(4) {
+  padding: 0;
+  margin: 0;
 }
 
 .addcontacts {
@@ -79,7 +90,14 @@ table.contactsList tbody tr td {
   margin-bottom: 8px;
 }
 
-button,
+button {
+  border: 0;
+  font-size: 16px;
+  width: 100px;
+  height: 40px;
+  color: #909090;
+}
+
 input[type="text"],
 input[type="email"] {
   color: #505050;
@@ -99,4 +117,10 @@ input[type="email"] {
 
 table.contactsList tbody tr td input {
   border: 0;
+}
+
+.faicons {
+  margin-right: 24px;
+  font-size: 24px;
+  color: #909090;
 }

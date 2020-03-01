@@ -5,6 +5,12 @@ import "./App.css";
 import Header from "./Components/header";
 import ListItems from "./Components/listitems";
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faTrash)
+library.add(faPencilAlt)
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -140,7 +146,7 @@ class App extends React.Component {
                   ></input>
                 </td>
                 <td>
-                  <button type="submit">Add</button>
+                  <button type="submit">Add new</button>
                 </td>
               </tr>
             </thead>
