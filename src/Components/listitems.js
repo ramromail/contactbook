@@ -3,64 +3,91 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ListItems(props) {
+
   const items = props.items;
+  const itemToEdit = props.itemToEdit;
+
   const listItems = items.map(item => {
-    // console.log(item);
+    
+    const editMode = item.edit;
+    let uiControls;
+
+    if (editMode) {
+      uiControls = <div>
+        <button
+          className="cancelButton"
+          onClick={() => {
+            props.cancelEdit(item.id);
+          }}>
+          Cancel
+          </button>
+        <button
+          className="saveButton"
+          onClick={(e) => {
+            props.saveItem(item.id);
+          }}
+        >
+          Save
+          </button>
+      </div>
+
+    } else {
+      uiControls = <div>
+        <FontAwesomeIcon
+          className="faicons"
+          onClick={() => {
+            props.editItem(item.id);
+          }}
+          icon="pencil-alt"
+        />
+
+        <FontAwesomeIcon
+          className="faicons"
+          onClick={() => { 
+            if (window.confirm('Are you sure you wish to delete this item?')) props.deleteItem(item.id) 
+          }}
+          icon="trash"
+        />
+      </div>
+    }
+
     return (
       <tr key={item.id} data-id={item.id}>
         <td>
           <input
             name="fullName"
             type="text"
-            value={item.fullName}
+            value={item.edit ? itemToEdit.fullName : item.fullName}
             onChange={e => {
-              props.setUpdate(e.target.name, e.target.value, item.id);
+              props.handleEditInput(e);
             }}
+            disabled={!item.edit}
           />
         </td>
         <td>
           <input
             name="emailAddress"
             type="text"
-            value={item.emailAddress}
+            value={item.edit ? itemToEdit.emailAddress : item.emailAddress}
             onChange={e => {
-              props.setUpdate(e.target.name, e.target.value, item.id);
+              props.handleEditInput(e);
             }}
+            disabled={!item.edit}
           />
         </td>
         <td>
           <input
             name="phoneNumber"
             type="text"
-            value={item.phoneNumber}
+            value={item.edit ? itemToEdit.phoneNumber : item.phoneNumber}
             onChange={e => {
-              props.setUpdate(e.target.name, e.target.value, item.id);
+              props.handleEditInput(e);
             }}
+            disabled={!item.edit}
           />
         </td>
         <td>
-          {/* <button
-            onClick={() => {
-              props.deleteItem(item.id);
-            }}
-          >
-            Del
-          </button> */}
-          <FontAwesomeIcon
-            className="faicons"
-            onClick={() => {
-              props.deleteItem(item.id);
-            }}
-            icon="pencil-alt"
-          />
-
-          <FontAwesomeIcon
-            className="faicons"
-            onClick={() => {
-              props.deleteItem(item.id);
-            }}
-            icon="trash"
-          />
+          {uiControls}
         </td>
       </tr>
     );
@@ -70,9 +97,9 @@ function ListItems(props) {
     <table className="contactsList">
       <thead>
         <tr>
-          <td>Name</td>
-          <td>E-mail address</td>
-          <td>Phone number</td>
+          <td><span onClick={e => props.sortTable('name')}>Name</span></td>
+          <td><span onClick={e => props.sortTable('email')}>E-mail address</span></td>
+          <td><span onClick={e => props.sortTable('phone')}>Phone number</span></td>
           <td></td>
         </tr>
       </thead>

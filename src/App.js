@@ -1,5 +1,4 @@
 import React from "react";
-// import logo from "./logo.svg";
 import "./App.css";
 
 import Header from "./Components/header";
@@ -21,12 +20,28 @@ class App extends React.Component {
         emailAddress: "",
         phoneNumber: "",
         id: ""
+      },
+      itemToEdit: {
+        fullName: "",
+        emailAddress: "",
+        phoneNumber: "",
+        id: ""
+      },
+      sort: {
+        name: "default",
+        email: "default",
+        phone: "default",
       }
     };
+
     this.addItem = this.addItem.bind(this);
-    this.handleInput = this.handleInput.bind(this);
+    this.cancelEdit = this.cancelEdit.bind(this);
+    this.saveItem = this.saveItem.bind(this);
+    this.handleAddInput = this.handleAddInput.bind(this);
+    this.handleEditInput = this.handleEditInput.bind(this);
+    this.editItem = this.editItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
-    this.setUpdate = this.setUpdate.bind(this);
+    this.sortTable = this.sortTable.bind(this);
   }
 
   componentDidMount() {
@@ -54,20 +69,15 @@ class App extends React.Component {
   addItem(e) {
     e.preventDefault();
     const newItem = this.state.currentItem;
-    if (newItem.fullName === "") {
-      alert('Please provide a name.');
-      return false;
-    }
-    else if (newItem.emailAddress === "") {
-      alert('Please provide a valid e-mail address.');
-      return false;
-    }
-    else if (newItem.phoneNumber === "") {
-      alert('Please provide a valid phone number.');
+    const errorString = this.validateInputs(newItem);
+    
+    if (true !== errorString) {
+      alert('Please fix these issues:\n' + errorString);
       return false;
     }
     else {
-      const items = [...this.state.items, newItem];
+      const items = [newItem, ...this.state.items];
+
       this.setState({
         items: items,
         currentItem: {
@@ -79,7 +89,7 @@ class App extends React.Component {
       });
     }
   }
-  handleInput(e) {
+  handleAddInput(e) {
     const name = e.target.name;
     this.setState({
       currentItem: {
@@ -89,31 +99,191 @@ class App extends React.Component {
       }
     });
   }
+  handleEditInput(e) {
+    const name = e.target.name;
+    this.setState({
+      itemToEdit: {
+        ...this.state.itemToEdit,
+        [name]: e.target.value,
+      }
+    });
+  }
+  saveItem(id) {
+    const items = this.state.items;
+    const itemToEdit = this.state.itemToEdit;
+    const errorString = this.validateInputs(itemToEdit);
+    
+    if (true !== errorString) {
+      alert('Please fix these issues:\n' + errorString);
+      return false;
+    }
+    else {
+
+      items.forEach(item => {
+        if (item.id === id) {
+          item.fullName = itemToEdit.fullName;
+          item.emailAddress = itemToEdit.emailAddress;
+          item.phoneNumber = itemToEdit.phoneNumber;
+        }
+      });
+
+      this.setState({
+        items: items,
+        itemToEdit: {
+          fullName: "",
+          emailAddress: "",
+          phoneNumber: "",
+          id: ""
+        }
+      });
+
+      this.cancelEdit(id);
+    }
+  }
+
+  editItem(key) {
+    const items = this.state.items;
+
+    let fname = '',
+      email = '',
+      phone = '';
+
+    items.forEach(item => {
+      if (item.id === key) {
+        item.edit = true;
+
+        fname = item.fullName;
+        email = item.emailAddress;
+        phone = item.phoneNumber;
+
+      }
+      else {
+        item.edit = false;
+      }
+    });
+
+    this.setState({
+      itemToEdit: {
+        fullName: fname,
+        emailAddress: email,
+        phoneNumber: phone,
+        id: key
+      }
+    });
+
+    this.setState({
+      items: items
+    });
+
+  }
+  cancelEdit(key) {
+    const items = this.state.items;
+    items.forEach(item => {
+      item.edit = false;
+    });
+
+    this.setState({
+      items: items
+    });
+
+  }
+
   deleteItem(key) {
-    console.log("delete: " + key);
     const filteredItems = this.state.items.filter(item => item.id !== key);
     this.setState({
       items: filteredItems
     });
   }
-  setUpdate(name, text, key) {
-    console.log(name, text, key);
-    // console.log("items:" + this.state.items);
-    const items = this.state.items;
-    items.forEach(item => {
-      if (item.id === key) {
-        console.log(item.key + "    " + key);
-        item[name] = text;
+
+  sortTable(colName) {
+    
+    let items = this.state.items, sortOrder = '';
+
+    if(this.state.sort[colName] === 'default' || this.state.sort[colName] === 'desc') {
+      sortOrder = 'asc';
+    }
+    else {
+      sortOrder = 'desc';
+    }
+
+    if(colName === 'name') {
+      if(sortOrder === 'asc') {
+        items.sort((a, b) => a.fullName.localeCompare(b.fullName));
+      }
+      else {
+        items.sort((a, b) => b.fullName.localeCompare(a.fullName));
+      }
+    }
+    else if(colName === 'email') {
+      if(sortOrder === 'asc') {
+        items.sort((a, b) => a.emailAddress.localeCompare(b.emailAddress));
+      }
+      else {
+        items.sort((a, b) => b.emailAddress.localeCompare(a.emailAddress));
+      }
+    }
+    else if(colName === 'phone') {
+      if(sortOrder === 'asc') {
+        items.sort((a, b) => a.phoneNumber.localeCompare(b.phoneNumber));
+      }
+      else {
+        items.sort((a, b) => b.phoneNumber.localeCompare(a.phoneNumber));
+      }
+    }
+
+    this.setState({
+      items,
+      sort: {
+        [colName]: sortOrder
       }
     });
-    this.setState({
-      items: items
-    });
+
   }
+
+  validateInputs(item) {
+    const name = item.fullName.toString();
+    const email = item.emailAddress.toString();
+    const phone = item.phoneNumber.toString();
+
+    const fullNamePattern = /^[a-zA-Z0-9.\s]{5,30}$/;
+    const emailAddPattern = /^[a-zA-Z0-9.-]{3,15}@[a-zA-Z0-9-]{3,10}.[a-zA-Z]{2,5}$/;
+    const phoneNumPattern = /^\d{10}$/;
+
+    let errorString = '';
+
+    if (name === '') {
+      errorString += '\t- Name cannot be empty\n';
+    }
+    else if (fullNamePattern.test(name) === false) {
+      errorString += '\t- Name can only contain letters, numbers and space and must be 5-20 characters.\n';
+    }
+
+    if (email === "") {
+      errorString += '\t- Email address cannot be empty\n';
+    }
+    else if (emailAddPattern.test(email) === false) {
+      errorString += '\t- Please enter a valid email address\n';
+    }
+
+    if (phone === "") {
+      errorString += '\t- Phone number cannot be empty\n';
+    }
+    else if (phoneNumPattern.test(phone) === false) {
+      errorString += '\t- Phone number can only contain numbers and must have 10 digits\n';
+    }
+
+    if (errorString === '') {
+      return true;
+    }
+
+    return errorString;
+  }
+
   render() {
     return (
       <div className="App">
         <Header />
+        <h1 className="listHeader">List of participants</h1>
         <form id="to-do-form" onSubmit={this.addItem}>
           <table className="addcontacts">
             <thead>
@@ -124,7 +294,7 @@ class App extends React.Component {
                     placeholder="Full name"
                     name="fullName"
                     value={this.state.currentItem.fullName}
-                    onChange={this.handleInput}
+                    onChange={this.handleAddInput}
                   ></input>
                 </td>
                 <td>
@@ -133,7 +303,7 @@ class App extends React.Component {
                     placeholder="E-mail address"
                     name="emailAddress"
                     value={this.state.currentItem.emailAddress}
-                    onChange={this.handleInput}
+                    onChange={this.handleAddInput}
                   ></input>
                 </td>
                 <td>
@@ -142,7 +312,7 @@ class App extends React.Component {
                     placeholder="Phone number"
                     name="phoneNumber"
                     value={this.state.currentItem.phoneNumber}
-                    onChange={this.handleInput}
+                    onChange={this.handleAddInput}
                   ></input>
                 </td>
                 <td>
@@ -155,8 +325,13 @@ class App extends React.Component {
 
         <ListItems
           items={this.state.items}
+          itemToEdit={this.state.itemToEdit}
+          cancelEdit={this.cancelEdit}
+          editItem={this.editItem}
+          saveItem={this.saveItem}
           deleteItem={this.deleteItem}
-          setUpdate={this.setUpdate}
+          handleEditInput={this.handleEditInput}
+          sortTable={this.sortTable}
         />
       </div>
     );
