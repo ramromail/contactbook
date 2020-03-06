@@ -325,6 +325,7 @@ class App extends React.Component {
 
         <ListItems
           items={this.state.items}
+          sort={this.state.sort}
           itemToEdit={this.state.itemToEdit}
           cancelEdit={this.cancelEdit}
           editItem={this.editItem}

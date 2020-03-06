@@ -77,6 +77,12 @@ table.addcontacts thead tr td {
 
 table.contactsList thead tr td {
   padding: 24px;
+  font-weight: bold;
+}
+
+table.contactsList thead tr td div {
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 table.addcontacts thead tr td, 
@@ -185,4 +191,19 @@ table.contactsList tbody tr td input {
 
 table.contactsList tbody tr:hover  {
   background-color: rgba(0,0,0,0.1);
+}
+
+.default:after {
+  content: " ";
+  /* font-weight: bold; */
+}
+
+ .asc:after {
+  content: " ↓";
+  font-weight: bold;
+}
+
+ .desc:after {
+  content: " ↑";
+  font-weight: bold;
 }
