@@ -45,7 +45,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch("contacts.json")
+    fetch("contactbook/contacts.json")
       .then(response => response.json())
       .then(
         // handle the result
