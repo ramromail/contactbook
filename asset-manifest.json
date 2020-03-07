@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/contactbook/static/css/main.1c83fd3d.chunk.css",
-    "main.js": "/contactbook/static/js/main.f76099b2.chunk.js",
-    "main.js.map": "/contactbook/static/js/main.f76099b2.chunk.js.map",
+    "main.js": "/contactbook/static/js/main.425950f3.chunk.js",
+    "main.js.map": "/contactbook/static/js/main.425950f3.chunk.js.map",
     "runtime-main.js": "/contactbook/static/js/runtime-main.2d2a2f66.js",
     "runtime-main.js.map": "/contactbook/static/js/runtime-main.2d2a2f66.js.map",
     "static/js/2.6623c21b.chunk.js": "/contactbook/static/js/2.6623c21b.chunk.js",
     "static/js/2.6623c21b.chunk.js.map": "/contactbook/static/js/2.6623c21b.chunk.js.map",
     "index.html": "/contactbook/index.html",
-    "precache-manifest.917caf14dcf023ee377aa713662f2813.js": "/contactbook/precache-manifest.917caf14dcf023ee377aa713662f2813.js",
+    "precache-manifest.d963a5dbe156c0b55b0352284e76318e.js": "/contactbook/precache-manifest.d963a5dbe156c0b55b0352284e76318e.js",
     "service-worker.js": "/contactbook/service-worker.js",
     "static/css/main.1c83fd3d.chunk.css.map": "/contactbook/static/css/main.1c83fd3d.chunk.css.map",
     "static/js/2.6623c21b.chunk.js.LICENSE.txt": "/contactbook/static/js/2.6623c21b.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.2d2a2f66.js",
     "static/js/2.6623c21b.chunk.js",
     "static/css/main.1c83fd3d.chunk.css",
-    "static/js/main.f76099b2.chunk.js"
+    "static/js/main.425950f3.chunk.js"
   ]
 }
