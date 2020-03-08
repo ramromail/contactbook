@@ -1,6 +1,6 @@
 {
   "homepage": "https://ramromail.github.io/contactbook",
-  "name": "contacts",
+  "name": "contactbook",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
