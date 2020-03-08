@@ -59,7 +59,7 @@ class App extends React.Component {
 
   /* react hook, when app component is ready make a ajax request to fetch contacts */
   componentDidMount() {
-    fetch("contacts.json")
+    fetch("contactbook/contacts.json")
       .then(response => response.json())
       .then(
         // handle the result
