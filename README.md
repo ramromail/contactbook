@@ -1,3 +1,7 @@
+A demo contact book app with ReactJS made for a fictional company.
+
+[Contact Book demo](https://ramromail.github.io/contactbook/)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
